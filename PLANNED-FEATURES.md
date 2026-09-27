@@ -1,11 +1,13 @@
-# GoreeCloud Camera — Feature Roadmap
+# GoreeCloud Camera — Planned Features
+
+> **Authority:** Repository-native planned-feature record  
+> **Migration:** Replaces the retired `FEATURE-ROADMAP.md` / Google Drive roadmap controls. GitHub is the sole feature-state authority.
 
 > Repository document version: **0.5.0**  
 > Product internal version: **0.1.0**  
 > Release lifecycle: **Concept**  
-> Drive synchronized representation: **GoreeCloud/Feature Roadmap/GoreeCloud Camera/FEATURE-ROADMAP.md**
 
-The repository `FEATURE-ROADMAP.md` is the **canonical editable roadmap source** under current GoreeCloud governance. The corresponding Drive Markdown record is the synchronized GoreeCloud-wide representation. Both must remain materially consistent with authoritative project documentation and verified implementation evidence.
+`PLANNED-FEATURES.md` is the authoritative repository planned-feature record. The former Google Drive roadmap is retired after migration and must not be maintained as a synchronized copy.
 
 Items remain **planned unless explicitly reclassified by verified implementation evidence**. The native Android foundation is currently in progress as recorded below; this does not promote the product beyond Concept.
 
