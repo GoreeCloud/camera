@@ -69,4 +69,4 @@ The video/audio implementation is **source/build verified**, not runtime qualifi
 
 ## Status rule
 
-Planned capabilities remain in `FEATURE-ROADMAP.md`. Source implementation, build verification, representative-emulator runtime qualification, physical-device qualification, and production acceptance are separate evidence levels and must not be conflated.
+Planned capabilities remain in `PLANNED-FEATURES.md`. Source implementation, build verification, representative-emulator runtime qualification, physical-device qualification, and production acceptance are separate evidence levels and must not be conflated.
