@@ -240,7 +240,7 @@ class MainActivity : Activity() {
         guidanceButton = Button(this).apply {
             text = getString(R.string.help_and_guidance)
             contentDescription = getString(R.string.help_and_guidance_content_description)
-            isAllCaps = false
+            setAllCaps(false)
         }
         topPanel.addView(title, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         topPanel.addView(stateLabel, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
@@ -390,14 +390,14 @@ class MainActivity : Activity() {
         }
         val backButton = Button(this).apply {
             text = getString(R.string.guide_back)
-            isAllCaps = false
+            setAllCaps(false)
         }
         val nextButton = Button(this).apply {
-            isAllCaps = false
+            setAllCaps(false)
         }
         val closeButton = Button(this).apply {
             text = getString(R.string.guide_close)
-            isAllCaps = false
+            setAllCaps(false)
             visibility = if (replay) View.VISIBLE else View.GONE
         }
 
@@ -504,14 +504,14 @@ class MainActivity : Activity() {
         }
         val replayButton = Button(this).apply {
             text = getString(R.string.replay_startup_guide)
-            isAllCaps = false
+            setAllCaps(false)
         }
         val hintButton = Button(this).apply {
-            isAllCaps = false
+            setAllCaps(false)
         }
         val closeButton = Button(this).apply {
             text = getString(R.string.guide_close)
-            isAllCaps = false
+            setAllCaps(false)
         }
 
         fun renderHintButton() {
