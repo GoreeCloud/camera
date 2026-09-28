@@ -70,9 +70,9 @@ Core capture remains local and offline-first. Android 10+ MediaStore lets Camera
 
 ## Repository documentation
 
-- [SPECIFICATIONS.md](SPECIFICATIONS.md)
+- [PROJECT-SPECIFICATIONS.md](PROJECT-SPECIFICATIONS.md)
 - [FEATURES.md](FEATURES.md)
-- [FEATURE-ROADMAP.md](FEATURE-ROADMAP.md)
+- [PLANNED-FEATURES.md](PLANNED-FEATURES.md)
 - [BENEFITS.md](BENEFITS.md)
 - [COMPETITIVE-OBJECTIVES.md](COMPETITIVE-OBJECTIVES.md)
 - [BRANDING.md](BRANDING.md)
