@@ -6,7 +6,7 @@
 
 ## Current baseline
 
-- Canonical repository: `GoreeCloud/goreecloud-camera`.
+- Canonical repository: `GoreeCloud/camera`.
 - Product version baseline: `0.1.0`.
 - Lifecycle remains Concept; source/build progress does not establish promotion.
 - Primary platform: native Android/Kotlin.
