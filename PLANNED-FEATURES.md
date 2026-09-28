@@ -20,7 +20,7 @@ GoreeCloud Camera is planned as one native application combining **Professional 
 ### Phase 0 — Governance and architecture baseline
 Status: **Substantially complete; licensing blocker remains**
 
-Completed repository work includes the canonical Drive project specification, synchronized Drive roadmap, repository documentation baseline, product version identity, Platform Contract 0.2 declaration, current lifecycle classification, and exact-revision Platform Contract validation. A recognized repository license remains unresolved.
+Completed repository work includes the repository-native project specification and project record migration candidate, repository-native feature-state records, repository documentation baseline, product version identity, Platform Contract 0.2 declaration, current lifecycle classification, and exact-revision Platform Contract validation. A recognized repository license remains unresolved.
 
 ### Phase 1 — Native Android capture foundation
 Status: **In progress**
@@ -170,4 +170,4 @@ Real-device matrix, recovery/security/privacy/accessibility acceptance, current 
 
 ## Canonical feature families
 
-The synchronized Drive roadmap retains the detailed capability requirements for automatic photography, low light, portraits, Motion Photos, Best Shot, professional still/video, Cinema, stabilization, dual/multi-camera, creative capture, Lenses, filters, creator tools, scanning, visual utilities, Camera Intelligence, Private Capture, metadata, offline-first architecture, Gallery/Photos/Everkeep relationships, Glaze UI, Wardveil Security, Privacy Shield, Everkeep, capability profiles, reliability, storage/thermal/battery safeguards, provenance, accessibility, diagnostics, qualification, and release acceptance.
+PROJECT-SPECIFICATIONS.md preserves the detailed project requirements for automatic photography, low light, portraits, Motion Photos, Best Shot, professional still/video, Cinema, stabilization, dual/multi-camera, creative capture, Lenses, filters, creator tools, scanning, visual utilities, Camera Intelligence, Private Capture, metadata, offline-first architecture, Gallery/Photos/Everkeep relationships, Glaze UI, Wardveil Security, Privacy Shield, Everkeep, capability profiles, reliability, storage/thermal/battery safeguards, provenance, accessibility, diagnostics, qualification, and release acceptance.
