@@ -25,6 +25,8 @@ import com.goreecloud.camera.camera.CameraSessionController
 import com.goreecloud.camera.camera.CameraSessionState
 import com.goreecloud.camera.guidance.CameraGuidancePolicy
 import com.goreecloud.camera.guidance.CameraGuidanceStore
+import com.goreecloud.camera.settings.CameraSettingsStore
+import com.goreecloud.camera.ui.CompositionGridView
 
 class MainActivity : Activity() {
     private lateinit var previewView: TextureView
@@ -35,18 +37,23 @@ class MainActivity : Activity() {
     private lateinit var permissionButton: Button
     private lateinit var shutterButton: Button
     private lateinit var videoButton: Button
+    private lateinit var settingsButton: Button
     private lateinit var guidanceButton: Button
     private lateinit var contextualHintLabel: TextView
+    private lateinit var compositionGridView: CompositionGridView
     private lateinit var sessionController: CameraSessionController
     private lateinit var guidanceStore: CameraGuidanceStore
+    private lateinit var settingsStore: CameraSettingsStore
 
     private var guidanceDialog: Dialog? = null
+    private var settingsDialog: Dialog? = null
     private var currentSessionState = CameraSessionState.IDLE
     private var videoCapabilityAvailable = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         guidanceStore = CameraGuidanceStore(this)
+        settingsStore = CameraSettingsStore(this)
         buildInterface()
 
         sessionController = CameraSessionController(
@@ -134,12 +141,19 @@ class MainActivity : Activity() {
             }
         }
 
+        settingsButton.setOnClickListener {
+            if (guidanceStore.isFirstUseComplete()) {
+                showSettingsMenu()
+            }
+        }
+
         guidanceButton.setOnClickListener {
             if (guidanceStore.isFirstUseComplete()) {
                 showGuidanceMenu()
             }
         }
 
+        refreshCompositionGrid()
         refreshCapabilities()
         renderPermissionState()
         updateCaptureControls()
@@ -161,6 +175,8 @@ class MainActivity : Activity() {
     }
 
     override fun onDestroy() {
+        guidanceDialog?.dismiss()
+        settingsDialog?.dismiss()
         sessionController.shutdown()
         super.onDestroy()
     }
@@ -201,6 +217,14 @@ class MainActivity : Activity() {
         }
         root.addView(previewView, FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT))
 
+        compositionGridView = CompositionGridView(this).apply {
+            visibility = View.GONE
+        }
+        root.addView(
+            compositionGridView,
+            FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT),
+        )
+
         val topPanelPaddingHorizontal = dp(16)
         val topPanelPaddingTop = dp(12)
         val topPanelPaddingBottom = dp(12)
@@ -237,16 +261,28 @@ class MainActivity : Activity() {
             setPadding(0, dp(8), 0, 0)
             visibility = View.GONE
         }
+        settingsButton = Button(this).apply {
+            text = getString(R.string.camera_settings)
+            contentDescription = getString(R.string.camera_settings_content_description)
+            setAllCaps(false)
+        }
         guidanceButton = Button(this).apply {
             text = getString(R.string.help_and_guidance)
             contentDescription = getString(R.string.help_and_guidance_content_description)
             setAllCaps(false)
         }
+        val topActions = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            gravity = Gravity.START
+        }
+        topActions.addView(settingsButton, LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT))
+        topActions.addView(guidanceButton, LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT))
+
         topPanel.addView(title, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         topPanel.addView(stateLabel, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         topPanel.addView(capabilityLabel, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         topPanel.addView(contextualHintLabel, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
-        topPanel.addView(guidanceButton, LinearLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT))
+        topPanel.addView(topActions, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
 
         root.addView(
             topPanel,
@@ -478,6 +514,73 @@ class MainActivity : Activity() {
         dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
 
+    private fun showSettingsMenu() {
+        settingsDialog?.takeIf { it.isShowing }?.dismiss()
+
+        val dialog = Dialog(this)
+        settingsDialog = dialog
+        dialog.setCancelable(true)
+        dialog.setCanceledOnTouchOutside(true)
+
+        val panel = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(24), dp(24), dp(24), dp(20))
+            setBackgroundColor(Color.rgb(24, 24, 24))
+        }
+        val title = TextView(this).apply {
+            text = getString(R.string.camera_settings_title)
+            setTextColor(Color.WHITE)
+            textSize = 22f
+        }
+        val body = TextView(this).apply {
+            text = getString(R.string.camera_settings_body)
+            setTextColor(Color.LTGRAY)
+            textSize = 15f
+            setPadding(0, dp(10), 0, dp(16))
+        }
+        val gridButton = Button(this).apply {
+            setAllCaps(false)
+        }
+        val closeButton = Button(this).apply {
+            text = getString(R.string.guide_close)
+            setAllCaps(false)
+        }
+
+        fun renderGridButton() {
+            gridButton.text = if (settingsStore.isCompositionGridEnabled()) {
+                getString(R.string.composition_grid_on)
+            } else {
+                getString(R.string.composition_grid_off)
+            }
+        }
+
+        gridButton.setOnClickListener {
+            settingsStore.setCompositionGridEnabled(
+                !settingsStore.isCompositionGridEnabled(),
+            )
+            renderGridButton()
+            refreshCompositionGrid()
+        }
+        closeButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        panel.addView(title, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
+        panel.addView(body, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
+        panel.addView(gridButton, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
+        panel.addView(closeButton, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
+
+        dialog.setOnDismissListener {
+            if (settingsDialog === dialog) {
+                settingsDialog = null
+            }
+        }
+        dialog.setContentView(panel)
+        renderGridButton()
+        dialog.show()
+        dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+    }
+
     private fun showGuidanceMenu() {
         guidanceDialog?.takeIf { it.isShowing }?.dismiss()
 
@@ -552,6 +655,12 @@ class MainActivity : Activity() {
         renderHintButton()
         dialog.show()
         dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
+    }
+
+    private fun refreshCompositionGrid() {
+        if (!::compositionGridView.isInitialized || !::settingsStore.isInitialized) return
+        compositionGridView.visibility =
+            if (settingsStore.isCompositionGridEnabled()) View.VISIBLE else View.GONE
     }
 
     private fun refreshContextualHint() {
