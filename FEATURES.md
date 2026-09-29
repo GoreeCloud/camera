@@ -1,6 +1,6 @@
 # GoreeCloud Camera — Current Features
 
-> Repository document version: **0.5.0**  
+> Repository document version: **0.6.0**  
 > Product internal version: **0.1.0**  
 > Release lifecycle: **Concept**
 
@@ -20,6 +20,8 @@ Representative Android 16 / API 36 virtual-camera CI evidence verifies the follo
 The preview/JPEG regression also passed on final PR #8 candidate `86d2d63f373ddbe7df8e6681925fafb6596972f6` in Android Foundation run `35101834080`. This evidence verifies the bounded preview/still path only; it does not qualify a physical device or exercise video/audio runtime behavior.
 
 ## Implemented source and build functionality
+
+The current stacked candidate additionally implements a mandatory, resumable three-step first-use guide before preview, replayable **Help & guidance**, and a global contextual-hints preference. Guidance is presentation-only and does not expand Camera2, microphone, storage, network, cloud, or release authority.
 
 Authoritative `main` commit `f6d414049f6ad4792a70da00903fead403dde58c` includes:
 
