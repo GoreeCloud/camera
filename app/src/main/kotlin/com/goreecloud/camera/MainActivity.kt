@@ -11,6 +11,7 @@ import android.hardware.camera2.CameraManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
+import android.view.KeyEvent
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -26,6 +27,7 @@ import com.goreecloud.camera.camera.CameraSessionState
 import com.goreecloud.camera.guidance.CameraGuidancePolicy
 import com.goreecloud.camera.guidance.CameraGuidanceStore
 import com.goreecloud.camera.settings.CameraSettingsStore
+import com.goreecloud.camera.settings.CameraVolumeShutterPolicy
 import com.goreecloud.camera.ui.CompositionGridView
 
 class MainActivity : Activity() {
@@ -126,8 +128,7 @@ class MainActivity : Activity() {
         }
 
         shutterButton.setOnClickListener {
-            photoStatusLabel.text = getString(R.string.photo_capture_in_progress)
-            sessionController.capturePhoto()
+            capturePhotoFromUserAction()
         }
 
         videoButton.setOnClickListener {
@@ -179,6 +180,32 @@ class MainActivity : Activity() {
         settingsDialog?.dismiss()
         sessionController.shutdown()
         super.onDestroy()
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        val isVolumeKey =
+            keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN
+        val modalSurfaceVisible =
+            guidanceDialog?.isShowing == true || settingsDialog?.isShowing == true
+        if (
+            CameraVolumeShutterPolicy.shouldCapture(
+                enabled = settingsStore.isVolumeShutterEnabled(),
+                isVolumeKey = isVolumeKey,
+                repeatCount = event.repeatCount,
+                sessionState = currentSessionState,
+                modalSurfaceVisible = modalSurfaceVisible,
+            )
+        ) {
+            capturePhotoFromUserAction()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun capturePhotoFromUserAction() {
+        if (currentSessionState != CameraSessionState.PREVIEWING) return
+        photoStatusLabel.text = getString(R.string.photo_capture_in_progress)
+        sessionController.capturePhoto()
     }
 
     override fun onRequestPermissionsResult(
@@ -541,6 +568,9 @@ class MainActivity : Activity() {
         val gridButton = Button(this).apply {
             setAllCaps(false)
         }
+        val volumeShutterButton = Button(this).apply {
+            setAllCaps(false)
+        }
         val closeButton = Button(this).apply {
             text = getString(R.string.guide_close)
             setAllCaps(false)
@@ -554,12 +584,26 @@ class MainActivity : Activity() {
             }
         }
 
+        fun renderVolumeShutterButton() {
+            volumeShutterButton.text = if (settingsStore.isVolumeShutterEnabled()) {
+                getString(R.string.volume_shutter_on)
+            } else {
+                getString(R.string.volume_shutter_off)
+            }
+        }
+
         gridButton.setOnClickListener {
             settingsStore.setCompositionGridEnabled(
                 !settingsStore.isCompositionGridEnabled(),
             )
             renderGridButton()
             refreshCompositionGrid()
+        }
+        volumeShutterButton.setOnClickListener {
+            settingsStore.setVolumeShutterEnabled(
+                !settingsStore.isVolumeShutterEnabled(),
+            )
+            renderVolumeShutterButton()
         }
         closeButton.setOnClickListener {
             dialog.dismiss()
@@ -568,6 +612,7 @@ class MainActivity : Activity() {
         panel.addView(title, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         panel.addView(body, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         panel.addView(gridButton, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
+        panel.addView(volumeShutterButton, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         panel.addView(closeButton, LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
 
         dialog.setOnDismissListener {
@@ -577,6 +622,7 @@ class MainActivity : Activity() {
         }
         dialog.setContentView(panel)
         renderGridButton()
+        renderVolumeShutterButton()
         dialog.show()
         dialog.window?.setLayout(MATCH_PARENT, WRAP_CONTENT)
     }
