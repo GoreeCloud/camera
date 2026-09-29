@@ -25,6 +25,35 @@ if not any(node.attrib.get("text") == expected for node in root.iter("node")):
 PY
 }
 
+
+assert_desc() {
+  local expected="$1"
+  dump_window
+  python3 - "$WINDOW_XML" "$expected" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+
+root = ET.parse(sys.argv[1]).getroot()
+expected = sys.argv[2]
+if not any(node.attrib.get("content-desc") == expected for node in root.iter("node")):
+    raise SystemExit(f"Expected Camera content description not found: {expected}")
+PY
+}
+
+assert_desc_absent() {
+  local unexpected="$1"
+  dump_window
+  python3 - "$WINDOW_XML" "$unexpected" <<'PY'
+import sys
+import xml.etree.ElementTree as ET
+
+root = ET.parse(sys.argv[1]).getroot()
+unexpected = sys.argv[2]
+if any(node.attrib.get("content-desc") == unexpected for node in root.iter("node")):
+    raise SystemExit(f"Unexpected Camera content description remained visible: {unexpected}")
+PY
+}
+
 assert_text_absent() {
   local unexpected="$1"
   dump_window
@@ -113,6 +142,25 @@ restart_app
 assert_text_absent "Welcome to GoreeCloud Camera"
 assert_text "Help & guidance"
 
+# Local Camera settings are presentation-only and persist across restart.
+tap_text "Settings"
+assert_text "Camera settings"
+assert_text "Composition grid: Off"
+tap_text "Composition grid: Off"
+assert_text "Composition grid: On"
+tap_text "Close"
+assert_desc "Composition grid overlay"
+
+restart_app
+assert_text_absent "Welcome to GoreeCloud Camera"
+assert_desc "Composition grid overlay"
+tap_text "Settings"
+assert_text "Composition grid: On"
+tap_text "Composition grid: On"
+assert_text "Composition grid: Off"
+tap_text "Close"
+assert_desc_absent "Composition grid overlay"
+
 # Contextual hints can be disabled globally and the preference survives restart.
 tap_text "Help & guidance"
 assert_text "Camera guidance"
@@ -131,4 +179,4 @@ restart_app
 assert_text_absent "Welcome to GoreeCloud Camera"
 assert_text "Help & guidance"
 
-echo "Camera first-use resume, completion, replay, and contextual-hint controls verified."
+echo "Camera first-use resume, completion, replay, contextual-hint controls, and persisted composition-grid setting verified."
