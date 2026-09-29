@@ -32,9 +32,15 @@ Steps 6–8 describe the implemented engineering control path. They do not const
 
 The current milestone does not request Internet, location, broad storage, all-files, or media-library read permissions.
 
+## Local settings candidate
+
+After completing first-use setup, open **Settings** from the Camera top controls. **Composition grid** is off by default. Turning it on shows a non-interactive rule-of-thirds overlay over the live preview; turning it off removes the overlay. The preference is stored only in Camera app-private settings and survives ordinary app restart.
+
+This setting changes preview presentation only. It does not grant Camera or microphone permission, change captured media, upload anything, or enable additional camera hardware.
+
 ## Current limitations
 
-The interface remains an engineering shell. Video/audio runtime qualification, microphone-routing evidence, physical-device support, local settings, zoom/focus/exposure UI, production Glaze UI, Private Capture, rich metadata policy, downstream Gallery/Photos handoff, interrupted/process-death recovery, and production signing remain unqualified or unimplemented.
+The interface remains an engineering shell. Video/audio representative-device qualification, microphone-routing evidence, physical-device support, broader local settings beyond the composition grid, zoom/focus/exposure UI, production Glaze UI, Private Capture, rich metadata policy, downstream Gallery/Photos handoff, interrupted/process-death recovery, and production signing remain unqualified or unimplemented.
 
 A visible `Photo saved` or `Video saved` result is engineering-state feedback; supported-device claims require the separate qualification process and artifact verification appropriate to the capability.
 
