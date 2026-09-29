@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# File internal version: 0.3.0
+# File internal version: 0.4.0
 set -euo pipefail
 
 readonly APP_ID="com.goreecloud.camera"
@@ -11,6 +11,7 @@ preview_ready=0
 photo_saved=0
 media_verified=0
 jpeg_verified=0
+first_use_guidance_verified=0
 photo_name=""
 media_id=""
 
@@ -94,7 +95,8 @@ capture_evidence() {
      [ "$preview_ready" -eq 1 ] &&
      [ "$photo_saved" -eq 1 ] &&
      [ "$media_verified" -eq 1 ] &&
-     [ "$jpeg_verified" -eq 1 ]; then
+     [ "$jpeg_verified" -eq 1 ] &&
+     [ "$first_use_guidance_verified" -eq 1 ]; then
     qualification_result="passed"
   fi
 
@@ -114,6 +116,7 @@ media_id=$media_id
 evidence_role=representative-emulator-preview-and-still-capture-qualification
 qualification_result=$qualification_result
 exit_status=$status
+first_use_guidance_resume_replay_and_hint_controls_verified=$first_use_guidance_verified
 physical_device_qualification=false
 stable_release_authority=none
 PROVENANCE
@@ -133,6 +136,8 @@ adb shell am force-stop "$APP_ID"
 adb shell input keyevent KEYCODE_WAKEUP || true
 adb shell wm dismiss-keyguard || true
 adb shell am start -W -n "$ACTIVITY"
+bash scripts/qualify_first_use_guidance.sh "$APP_ID"
+first_use_guidance_verified=1
 
 for attempt in $(seq 1 45); do
   dismiss_external_system_anr_dialog
