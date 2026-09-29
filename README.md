@@ -1,5 +1,8 @@
 # GoreeCloud Camera
 
+
+> **Repository migration:** Active Camera development has moved to [GoreeCloud/android-app-defaults](https://github.com/GoreeCloud/android-app-defaults) under `apps/camera/`. This standalone repository is retained for historical Git provenance; do not start new product development here.
+
 > Repository document version: **0.5.0**  
 > Product internal version: **0.1.0**  
 > Release lifecycle: **Concept**
