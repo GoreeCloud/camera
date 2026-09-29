@@ -84,7 +84,7 @@ The PR #8 Android emulator gate re-qualified the existing preview/JPEG behavior 
 - microphone-routing and captured-audio-track verification;
 - camera switching and production user-facing mode controls;
 - physical-device qualification or Camera-specific hardware profiles/quirk records;
-- broader local settings beyond the stacked composition-grid candidate;
+- broader local settings beyond the stacked composition-grid and volume-key shutter candidate;
 - robust interrupted/process-death still/video recovery beyond handled in-process cleanup;
 - production signing or packaged release;
 - accepted Glaze UI, Privacy Shield, Wardveil Security, Everkeep, Manager, Mesh, or Identity runtime integration;
@@ -94,7 +94,7 @@ Earlier runtime attempts exposed a case-sensitive shutter-selector defect, one Q
 
 ### 2.1 Stacked local-settings candidate
 
-The current unmerged settings continuation adds an app-private **Composition grid** preference. It defaults off, persists across ordinary restart, and renders a non-interactive rule-of-thirds overlay above the live preview and below Camera controls. The preference changes presentation only and does not alter Camera2 requests, capture output, MediaStore publication, permissions, microphone behavior, network authority, or lifecycle classification. Source/runtime validation on the exact candidate head remains required before this slice is treated as verified Development evidence.
+The current unmerged settings continuation adds two app-private preferences. **Composition grid** defaults off, persists across ordinary restart, and renders a non-interactive rule-of-thirds overlay above the live preview and below Camera controls. **Volume keys capture photo** defaults on and maps Volume Up/Down to the existing still-capture action only for the first key-down while the single Camera session is PREVIEWING and no Camera modal is visible; held/repeated presses and non-preview states fail closed. Neither preference adds a second capture path, changes MediaStore publication, requests permissions, broadens microphone/network/account authority, or changes lifecycle classification. Source/runtime validation on the exact candidate head remains required before this slice is treated as verified Development evidence.
 
 ## 3. Product scope and boundaries
 
