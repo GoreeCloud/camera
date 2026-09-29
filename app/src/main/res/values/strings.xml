@@ -58,5 +58,4 @@
     <string name="camera_settings_body">These settings change only this local Camera presentation. They do not grant permissions, upload captures, or change camera hardware authority.</string>
     <string name="composition_grid_off">Composition grid: Off</string>
     <string name="composition_grid_on">Composition grid: On</string>
-    <string name="composition_grid_content_description">Composition grid overlay</string>
 </resources>
