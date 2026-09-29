@@ -84,13 +84,17 @@ The PR #8 Android emulator gate re-qualified the existing preview/JPEG behavior 
 - microphone-routing and captured-audio-track verification;
 - camera switching and production user-facing mode controls;
 - physical-device qualification or Camera-specific hardware profiles/quirk records;
-- local settings persistence;
+- broader local settings beyond the stacked composition-grid candidate;
 - robust interrupted/process-death still/video recovery beyond handled in-process cleanup;
 - production signing or packaged release;
 - accepted Glaze UI, Privacy Shield, Wardveil Security, Everkeep, Manager, Mesh, or Identity runtime integration;
 - a recognized open-source repository license.
 
 Earlier runtime attempts exposed a case-sensitive shutter-selector defect, one Quickstep emulator ANR, and an engineering-shutter/system-taskbar overlap. Those failures did not establish a Camera2/MediaStore defect; the overlap was corrected with bottom system-bar inset handling, the runtime selector was constrained to the Camera package, and later exact candidates plus authoritative merged revisions subsequently passed.
+
+### 2.1 Stacked local-settings candidate
+
+The current unmerged settings continuation adds an app-private **Composition grid** preference. It defaults off, persists across ordinary restart, and renders a non-interactive rule-of-thirds overlay above the live preview and below Camera controls. The preference changes presentation only and does not alter Camera2 requests, capture output, MediaStore publication, permissions, microphone behavior, network authority, or lifecycle classification. Source/runtime validation on the exact candidate head remains required before this slice is treated as verified Development evidence.
 
 ## 3. Product scope and boundaries
 
@@ -412,4 +416,4 @@ The next bounded Phase 1 slice is therefore **video/audio runtime qualification*
 7. preserve no-Internet/no-location/no-broad-storage/no-media-read authority and keep microphone authority limited to the explicit recording purpose;
 8. preserve Concept lifecycle and all application-specific Platform System acceptance blockers until separately satisfied.
 
-Local settings, stronger process-death recovery, licensing, current Stable Glaze UI implementation, Platform System acceptance, production signing/release, and Stable qualification remain separate obligations and must not be silently folded into a broader unreviewable change.
+Broader local settings beyond the composition-grid candidate, stronger process-death recovery, licensing, current Stable Glaze UI implementation, Platform System acceptance, production signing/release, and Stable qualification remain separate obligations and must not be silently folded into a broader unreviewable change.
