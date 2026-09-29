@@ -52,4 +52,11 @@
     <string name="contextual_hint_camera_permission">Tip: Camera permission is used for the local preview and capture.</string>
     <string name="contextual_hint_microphone">Tip: Microphone permission is requested only when you start video with audio.</string>
     <string name="contextual_hint_local_media">Tip: Captures are saved through Android shared media; this Development build does not upload them.</string>
+    <string name="camera_settings">Settings</string>
+    <string name="camera_settings_content_description">Open Camera local settings</string>
+    <string name="camera_settings_title">Camera settings</string>
+    <string name="camera_settings_body">These settings change only this local Camera presentation. They do not grant permissions, upload captures, or change camera hardware authority.</string>
+    <string name="composition_grid_off">Composition grid: Off</string>
+    <string name="composition_grid_on">Composition grid: On</string>
+    <string name="composition_grid_content_description">Composition grid overlay</string>
 </resources>
