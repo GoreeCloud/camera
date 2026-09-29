@@ -14,6 +14,8 @@ CONTROLLER = CAMERA_ROOT / "camera" / "CameraSessionController.kt"
 PHOTO_COMMITTER = CAMERA_ROOT / "storage" / "PhotoMediaStoreCommitter.kt"
 VIDEO_NAMER = CAMERA_ROOT / "storage" / "VideoFileNamer.kt"
 VIDEO_COMMITTER = CAMERA_ROOT / "storage" / "VideoMediaStoreCommitter.kt"
+SETTINGS_STORE = CAMERA_ROOT / "settings" / "CameraSettingsStore.kt"
+COMPOSITION_GRID = CAMERA_ROOT / "ui" / "CompositionGridView.kt"
 
 EXPECTED = {
     "applicationId": "com.goreecloud.camera",
@@ -37,6 +39,8 @@ REQUIRED_FILES = [
     PHOTO_COMMITTER,
     VIDEO_NAMER,
     VIDEO_COMMITTER,
+    SETTINGS_STORE,
+    COMPOSITION_GRID,
 ]
 
 REQUIRED_PERMISSIONS = {
@@ -120,6 +124,25 @@ for required_fragment in (
 on_create_prefix = activity_text.split("override fun onCreate", 1)[0]
 if "requestPermissions" in on_create_prefix:
     fail("runtime permissions must not be requested before explicit user action")
+
+settings_text = SETTINGS_STORE.read_text(encoding="utf-8")
+for required_fragment in (
+    'PREFERENCES_NAME = "goreecloud_camera_settings"',
+    'KEY_COMPOSITION_GRID_ENABLED = "composition_grid_enabled"',
+    'getBoolean(KEY_COMPOSITION_GRID_ENABLED, false)',
+    'putBoolean(KEY_COMPOSITION_GRID_ENABLED, enabled)',
+):
+    if required_fragment not in settings_text:
+        fail(f"local Camera settings contract is missing: {required_fragment}")
+
+grid_text = COMPOSITION_GRID.read_text(encoding="utf-8")
+for required_fragment in (
+    "class CompositionGridView",
+    "composition_grid_content_description",
+    "canvas.drawLine",
+):
+    if required_fragment not in grid_text:
+        fail(f"composition grid source contract is missing: {required_fragment}")
 
 controller_text = CONTROLLER.read_text(encoding="utf-8")
 for required_fragment in (
