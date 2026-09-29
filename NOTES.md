@@ -1,11 +1,12 @@
 # GoreeCloud Camera — Repository Notes
 
-> Repository document version: **0.3.0**  
+> Repository document version: **0.4.0**  
 > Product internal version: **0.1.0**  
 > Release lifecycle: **Concept**
 
 ## Current baseline
 
+- The current stacked candidate includes mandatory first-use setup with persisted resume, replay, and globally disableable contextual hints. It remains Concept/Development presentation behavior only and does not create capture, permission, network, release, or Stable authority.
 - Canonical repository: `GoreeCloud/goreecloud-camera`.
 - Product version baseline: `0.1.0`.
 - Lifecycle remains Concept; source/build progress does not establish promotion.
