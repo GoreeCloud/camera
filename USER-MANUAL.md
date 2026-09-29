@@ -47,3 +47,8 @@ A visible `Photo saved` or `Video saved` result is engineering-state feedback; s
 - A source/build/CI success does not qualify a physical phone or prove video/audio runtime behavior.
 
 The required GoreeCloud-wide representation is `GoreeCloud/User Manuals/User Manual — GoreeCloud Camera.md`; this repository `USER-MANUAL.md` remains the canonical editable source.
+
+
+## Development first-use guidance
+
+On first launch of the current Development candidate, Camera shows a three-step setup guide before preview. If setup is interrupted, the current step resumes on the next launch. After completion, **Help & guidance** can replay the guide and can turn ordinary contextual hints on or off globally. These guidance controls do not grant Camera or microphone permission and do not upload media.
