@@ -5,7 +5,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
-import com.goreecloud.camera.R
 
 class CompositionGridView(context: Context) : View(context) {
     private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -14,8 +13,10 @@ class CompositionGridView(context: Context) : View(context) {
     }
 
     init {
-        contentDescription = context.getString(R.string.composition_grid_content_description)
-        importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
+        // This overlay is purely visual guidance. Excluding it from the accessibility tree avoids
+        // an extra non-actionable TalkBack stop while all Camera controls remain independently
+        // labeled and reachable.
+        importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_NO
         isClickable = false
         isFocusable = false
     }
