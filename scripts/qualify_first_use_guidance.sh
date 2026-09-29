@@ -7,6 +7,40 @@ readonly ACTIVITY="${APP_ID}/.MainActivity"
 readonly WINDOW_XML="/tmp/goreecloud-camera-guidance-window.xml"
 
 dump_window() {
+  local attempt
+  for attempt in 1 2; do
+    adb shell uiautomator dump /sdcard/goreecloud-camera-guidance.xml >/dev/null 2>&1
+    adb pull /sdcard/goreecloud-camera-guidance.xml "$WINDOW_XML" >/dev/null 2>&1
+
+    local quickstep_wait
+    quickstep_wait="$(
+      python3 - "$WINDOW_XML" <<'PY'
+import re
+import sys
+import xml.etree.ElementTree as ET
+
+root = ET.parse(sys.argv[1]).getroot()
+texts = {node.attrib.get("text", "") for node in root.iter("node")}
+if "Quickstep isn't responding" not in texts:
+    raise SystemExit(0)
+for node in root.iter("node"):
+    if node.attrib.get("package") == "android" and node.attrib.get("text") == "Wait":
+        match = re.fullmatch(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", node.attrib.get("bounds", ""))
+        if match:
+            x1, y1, x2, y2 = map(int, match.groups())
+            print((x1 + x2) // 2, (y1 + y2) // 2)
+            break
+PY
+    )"
+    if [ -z "$quickstep_wait" ]; then
+      return
+    fi
+
+    read -r wait_x wait_y <<<"$quickstep_wait"
+    adb shell input tap "$wait_x" "$wait_y"
+    sleep 2
+  done
+
   adb shell uiautomator dump /sdcard/goreecloud-camera-guidance.xml >/dev/null 2>&1
   adb pull /sdcard/goreecloud-camera-guidance.xml "$WINDOW_XML" >/dev/null 2>&1
 }
