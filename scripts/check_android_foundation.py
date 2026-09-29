@@ -138,7 +138,9 @@ for required_fragment in (
 grid_text = COMPOSITION_GRID.read_text(encoding="utf-8")
 for required_fragment in (
     "class CompositionGridView",
-    "composition_grid_content_description",
+    "IMPORTANT_FOR_ACCESSIBILITY_NO",
+    "isClickable = false",
+    "isFocusable = false",
     "canvas.drawLine",
 ):
     if required_fragment not in grid_text:
