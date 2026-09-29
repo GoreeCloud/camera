@@ -20,6 +20,7 @@ The release lifecycle remains **Concept**. Emulator success, source presence, an
 
 - Mandatory three-step first-use guidance now precedes preview in the current stacked Development candidate, persists an interrupted step, can be replayed from **Help & guidance**, and exposes a global contextual-hints toggle.
 - First-use language keeps Camera/microphone permission scope, local MediaStore capture, hardware-dependent capability, and Concept/Development limits explicit; it adds no network or cloud authority.
+- The stacked local-settings candidate adds an app-private **Composition grid** preference, default off, with a non-interactive rule-of-thirds preview overlay and persisted restart behavior. It does not change camera, microphone, storage, or network authority; fresh exact-head validation is still required.
 - Canonical Android application ID: `com.goreecloud.camera`.
 - Product version: `0.1.0`.
 - Compile/target baseline: Android 17 / API 37; provisional minimum SDK: API 29.
@@ -38,7 +39,7 @@ The release lifecycle remains **Concept**. Emulator success, source presence, an
 ## Still open
 
 - physical-device preview, still, video/audio, microphone-route/signal-quality, OEM, thermal, power, and camera-quirk qualification;
-- local settings foundation;
+- broader local settings beyond the current composition-grid candidate;
 - zoom/focus/exposure and lens-switching controls;
 - robust process-death/interrupted-capture and interrupted-recording recovery;
 - production Glaze UI implementation and acceptance;
