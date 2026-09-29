@@ -1,6 +1,6 @@
 # GoreeCloud Camera
 
-> Repository document version: **0.5.0**  
+> Repository document version: **0.6.0**  
 > Product internal version: **0.1.0**  
 > Release lifecycle: **Concept**
 
@@ -18,6 +18,8 @@ The release lifecycle remains **Concept**. Emulator success, source presence, an
 
 ## Implemented foundation
 
+- Mandatory three-step first-use guidance now precedes preview in the current stacked Development candidate, persists an interrupted step, can be replayed from **Help & guidance**, and exposes a global contextual-hints toggle.
+- First-use language keeps Camera/microphone permission scope, local MediaStore capture, hardware-dependent capability, and Concept/Development limits explicit; it adds no network or cloud authority.
 - Canonical Android application ID: `com.goreecloud.camera`.
 - Product version: `0.1.0`.
 - Compile/target baseline: Android 17 / API 37; provisional minimum SDK: API 29.
