@@ -103,13 +103,13 @@ Still required to complete Phase 1:
 
 - explicit video/audio runtime qualification on an audio-capable representative target;
 - initial physical-device preview/photo/video support and camera-quirk qualification evidence;
-- integrate and validate the stacked local-settings candidate beyond its first persisted composition-grid preference;
+- integrate and validate the stacked local-settings candidate carrying persisted composition-grid and volume-key shutter preferences;
 - stronger interrupted/process-death photo and recording recovery beyond handled in-process cleanup;
 - resolution of the public-repository open-source license blocker.
 
 Camera remains **Concept**. Source/build success and representative emulator runtime evidence materially strengthen implementation confidence but do not by themselves establish a user-ready release or lifecycle promotion.
 
-The stacked settings continuation introduces the first bounded local-settings slice: a default-off, app-private composition-grid preference with a non-interactive rule-of-thirds overlay. It remains candidate source until exact-head validation passes, and it does not close the broader local-settings milestone.
+The stacked settings continuation now carries two bounded local controls: a default-off app-private composition-grid preference with a non-interactive rule-of-thirds overlay, and a default-on volume-key shutter preference that reuses the existing photo action only from a ready PREVIEWING session. Modal surfaces, repeat key events, and non-preview states fail closed. The candidate does not add new capture, storage, permission, network, microphone, or cloud authority and does not close the broader local-settings milestone.
 
 ### Phase 2 — Capture reliability and device qualification
 Status: **Planned**
