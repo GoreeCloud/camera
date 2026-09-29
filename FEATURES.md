@@ -23,6 +23,8 @@ The preview/JPEG regression also passed on final PR #8 candidate `86d2d63f373ddb
 
 The current stacked candidate additionally implements a mandatory, resumable three-step first-use guide before preview, replayable **Help & guidance**, and a global contextual-hints preference. Guidance is presentation-only and does not expand Camera2, microphone, storage, network, cloud, or release authority.
 
+The stacked local-settings continuation adds a persisted **Composition grid** toggle and rule-of-thirds preview overlay. The setting is app-private, defaults off, changes presentation only, and requires fresh exact-head source/runtime validation before it is treated as verified Development evidence.
+
 Authoritative `main` commit `f6d414049f6ad4792a70da00903fead403dde58c` includes:
 
 - JPEG output capability discovery and JPEG `ImageReader` capture output;
@@ -53,7 +55,7 @@ The video/audio implementation is **source/build verified**, not runtime qualifi
 
 - video/audio runtime qualification and microphone-routing evidence;
 - physical-device qualification and device-profile/quirk records;
-- local settings persistence;
+- broader local settings beyond the persisted composition-grid candidate;
 - robust interrupted/process-death photo and recording recovery;
 - zoom/focus/exposure controls and lens switching UI;
 - production Glaze UI components and acceptance;
