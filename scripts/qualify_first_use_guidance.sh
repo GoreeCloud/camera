@@ -183,11 +183,11 @@ assert_text "Composition grid: Off"
 tap_text "Composition grid: Off"
 assert_text "Composition grid: On"
 tap_text "Close"
-assert_desc "Composition grid overlay"
+assert_desc_absent "Composition grid overlay"
 
 restart_app
 assert_text_absent "Welcome to GoreeCloud Camera"
-assert_desc "Composition grid overlay"
+assert_desc_absent "Composition grid overlay"
 tap_text "Settings"
 assert_text "Composition grid: On"
 tap_text "Composition grid: On"
